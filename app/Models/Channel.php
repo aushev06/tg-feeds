@@ -9,7 +9,7 @@ class Channel extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['url', 'name'];
+    protected $fillable = ['url', 'name', 'icon'];
 
     public function folders()
     {

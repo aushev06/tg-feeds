@@ -27,7 +27,6 @@ class FolderController extends Controller
      */
     public function store(StoreFolderRequest $request)
     {
-
         return $this->service->create($request->validated());
     }
 

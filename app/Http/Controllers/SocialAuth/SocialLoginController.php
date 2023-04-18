@@ -14,40 +14,17 @@ class SocialLoginController extends Controller
 {
     public function callbackVK(Request $request)
     {
-        $responseUser = Socialite::driver('vkontakte')->user();
+        $user = $this->getOrSaveUser('vkontakte');
 
 
-        /**
-         * @var User $user
-         */
-        $user = User::query()
-            ->where('social_id', $responseUser->getId())
-            ->orWhere('email', $responseUser->getEmail())
-            ->first();
 
-        if ($user !== null) {
-            User::createIfNotExistAndAuth($user);
-
-
-            return redirect()->to(session('redirect_to') ? session('redirect_to') . 'auth?token=' . $user->createToken('auth_token')->plainTextToken : config('app.frontend_url') . '/auth?token=' . $user->createToken('auth_token')->plainTextToken);
-        }
-
-        $newUser = [
-            'name' => $responseUser->getName(),
-            'avatar' => $responseUser->getAvatar(),
-            'country' => $responseUser->user['country'] ?? '',
-            'email' => $responseUser->email ?? '',
-            'social_id' => $responseUser->getId(),
-            'role' => 'user',
-            'network' => 'vk',
-            'ip' => $request->ip(),
-            'password' => Hash::make(rand(0, 1000)),
-            'links' => []
-        ];
-
-        $user = User::createIfNotExistAndAuth(userFields: $newUser);
-
-        return redirect()->to(session('redirect_to') ? session('redirect_to') . 'auth?token=' . $user->createToken('auth_token')->plainTextToken : config('app.frontend_url') . '/auth?token=' . $user->createToken('auth_token')->plainTextToken);
+        return redirect()->to(
+            session('redirect_to') ? session('redirect_to') . 'auth?token=' . $user->createToken(
+                    'auth_token'
+                )->plainTextToken : config('app.frontend_url') . '/auth?token=' . $user->createToken(
+                    'auth_token'
+                )->plainTextToken
+        );
     }
 
     public function facebook()
@@ -58,7 +35,20 @@ class SocialLoginController extends Controller
 
     public function callbackGoogle(Request $request): \Illuminate\Http\RedirectResponse
     {
-        $responseUser = Socialite::driver('google')->user();
+        $user = $this->getOrSaveUser('google');
+
+        return redirect()->to(
+            session('redirect_to') ? session('redirect_to') . 'auth?token=' . $user->createToken(
+                    'auth_token'
+                )->plainTextToken : config('app.frontend_url') . '/auth?token=' . $user->createToken(
+                    'auth_token'
+                )->plainTextToken
+        );
+    }
+
+    private function getOrSaveUser(string $driver)
+    {
+        $responseUser = Socialite::driver($driver)->user();
 
         /**
          * @var User $user
@@ -69,26 +59,18 @@ class SocialLoginController extends Controller
             ->first();
 
         if ($user !== null) {
-            User::createIfNotExistAndAuth($user);
-
-            return redirect()->to(session('redirect_to') ? session('redirect_to') . 'auth?token=' . $user->createToken('auth_token')->plainTextToken : config('app.frontend_url') . '/auth?token=' . $user->createToken('auth_token')->plainTextToken);
+            return User::createIfNotExistAndAuth($user);
         }
 
         $newUser = [
-            'name'      => $responseUser->getName(),
-            'avatar'    => $responseUser->getAvatar(),
-            'country'   => $responseUser->user['country'] ?? '',
-            'email'     => $responseUser->email ?? '',
+            'name' => $responseUser->getName(),
+            'avatar' => $responseUser->getAvatar(),
+            'country' => $responseUser->user['country'] ?? '',
+            'email' => $responseUser->email ?? '',
             'social_id' => $responseUser->getId(),
-            'role'      => 'user',
-            'network'   => 'google',
-            'ip'        => $request->ip(),
-            'password'  => Hash::make(rand(0, 1000)),
-            'links' => []
+            'password' => Hash::make(rand(0, 1000)),
         ];
 
-        $user = User::createIfNotExistAndAuth(userFields:$newUser);
-
-        return redirect()->to(config('app.frontend_url') .'/?token=' . $user->createToken('auth_token')->plainTextToken);
+        return $user = User::createIfNotExistAndAuth(userFields: $newUser);
     }
 }

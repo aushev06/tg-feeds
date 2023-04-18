@@ -41,9 +41,11 @@ class ChannelService implements ChannelServiceInterface
         $saveData = [
             'name' => $data['name'],
             'url' => $data['url'],
+            'icon' => $data['icon'] ?? '',
         ];
 
         $channel = $this->create($saveData);
+
         $user->channels()->attach($channel->id, [
             'folder_id' => $data['folder_id'],
         ]);

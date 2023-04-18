@@ -33,7 +33,7 @@ class ChannelCRUDTest extends TestCase
             ]);
 
 
-//        $response->assertStatus(201);
+        $response->assertStatus(201);
 
         $id = $response->json('id');
 

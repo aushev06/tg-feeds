@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('url');
-            $table->text('icon');
+            $table->text('icon')->nullable();
             $table->dateTime('last_update')->default(\Illuminate\Support\Facades\DB::raw('now()'));
             $table->timestamps();
             $table->softDeletes();
