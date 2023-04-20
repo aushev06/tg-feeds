@@ -25,6 +25,10 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/auth', function () {
+    return Inertia::render('Auth');
+});
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard', [
         'feeds' => \App\Models\Feed::query()->get()
@@ -37,5 +41,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 

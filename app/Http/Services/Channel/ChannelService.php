@@ -7,6 +7,7 @@ use App\Models\User;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class ChannelService implements ChannelServiceInterface
 {
@@ -23,6 +24,12 @@ class ChannelService implements ChannelServiceInterface
 
     public function create(array $data)
     {
+        if (isset($data['icon'])) {
+            $path = 'public/icons/' . time() . '.jpg';
+            $this->downloadIconFromTelegramAndSaveInStorage($data['icon'], $path);
+            $data['icon'] = str_replace('public/', '', $path);
+        }
+
         return Channel::query()->firstOrCreate($data);
     }
 
@@ -52,5 +59,10 @@ class ChannelService implements ChannelServiceInterface
 
 
         return $channel;
+    }
+
+    private function downloadIconFromTelegramAndSaveInStorage(string $iconUrl, string $path)
+    {
+        Storage::disk()->put($path, file_get_contents($iconUrl));
     }
 }

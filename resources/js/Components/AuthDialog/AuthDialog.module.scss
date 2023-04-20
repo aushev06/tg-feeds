@@ -1,0 +1,118 @@
+@import "../../styles/colors";
+
+.subTitle {
+  margin-bottom: 30px;
+}
+
+.modal {
+  max-width: 425px;
+  min-height: 350px;
+  @media (max-width: 414px) {
+    width: calc(100% - 20px) !important;
+    margin: 0 !important;
+  }
+}
+
+.closeButton {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.closeIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.welcomeButtons {
+  width: 90%;
+  margin: 0 auto 20px;
+
+  button {
+    padding: 12px;
+    width: 100%;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    height: 42px;
+
+    i {
+      width: 35px;
+      margin-top: 2px;
+    }
+
+    svg {
+      margin-right: 10px;
+    }
+  }
+}
+
+.welcomeFooter {
+  margin-top: 30px;
+  text-align: center;
+
+  svg {
+    margin-right: 10px;
+    width: 16px;
+    height: 11px;
+  }
+
+  span {
+    cursor: pointer;
+    color: $greenText;
+
+    :hover {
+      color: darken($greenText, 0.5);
+    }
+  }
+}
+
+.dialogContent {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.content {
+  width: 80% !important;
+  height: 100%;
+  margin: auto auto !important;
+
+  button {
+    position: relative;
+    border: 1px solid $grayLine !important;
+
+    svg {
+      position: absolute;
+      width: 24px !important;
+      left: 0;
+      margin-left: 21px;
+    }
+
+    color: $black !important;
+    text-decoration: none !important;
+    a {
+      text-decoration: none !important;
+    }
+
+    button {
+      text-decoration: none !important;
+    }
+  }
+}
+
+.title {
+  font-size: 24px !important;
+  color: $black !important;
+  font-weight: bold !important;
+  font-family: Formular;
+  text-align: center;
+}
+
+.subTitle {
+  color: $black !important;
+  text-align: center !important;
+  margin-bottom: 30px;
+  margin-top: 15px;
+}

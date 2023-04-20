@@ -14,7 +14,7 @@ class FolderService implements FolderServiceInterface
         $icon = '';
 
         if (isset($data['icon'])) {
-            $icon = $data['icon']->store('icons');
+            $icon = str_replace('public/', '', $data['icon']->store('public/icons'));
         }
 
         $data['icon'] = $icon;

@@ -1,0 +1,23 @@
+@import "../../styles/colors";
+
+.root {
+  display: flex;
+  align-items: center;
+
+  span {
+    color: $black;
+
+    &:hover {
+      color: $greenText;
+    }
+  }
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  background-size: cover;
+  background-position: center;
+  margin-right: 7px;
+  border-radius: 3px;
+}

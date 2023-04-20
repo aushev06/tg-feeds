@@ -28,6 +28,9 @@ class FolderCRUDTest extends TestCase
             ->actingAs($user)
             ->postJson('/api/folders', [
                 'name' => 'TestFolder',
+                'channels' => [
+                    'https://t.me/bankrollo'
+                ]
             ]);
 
         $response->assertStatus(201);
@@ -45,6 +48,9 @@ class FolderCRUDTest extends TestCase
             ->actingAs($secondUser)
             ->putJson('/api/folders/' . $id, [
                 'name' => 'TestFolderUpdated',
+                'channels' => [
+                    'https://t.me/bankrollo'
+                ]
             ])
             ->assertForbidden();
 
@@ -54,6 +60,9 @@ class FolderCRUDTest extends TestCase
             ->actingAs($user)
             ->putJson('/api/folders/' . $id, [
                 'name' => 'TestFolderUpdated',
+                'channels' => [
+                    'https://t.me/bankrollo'
+                ]
             ])
             ->assertOk();
 

@@ -1,0 +1,47 @@
+@import "../../styles/colors";
+
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 55px;
+  height: 55px;
+  margin-right: 10px;
+
+  @media (min-width: 415px) {
+    display: none;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.menuItem {
+  color: #fff;
+  font-size: 18px;
+  padding: 20px;
+}
+
+.rootActive {
+  background-color: #1d1d25;
+}
+
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: calc(100% - 55px);
+  top: 55px;
+  z-index: 3;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.menu {
+  position: fixed;
+  width: 70%;
+  height: 100%;
+  background-color: #fff;
+  top: 55px;
+  padding: 0 20px 30px 20px;
+}

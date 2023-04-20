@@ -7,6 +7,7 @@ namespace App\Http\Controllers\SocialAuth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -16,7 +17,7 @@ class SocialLoginController extends Controller
     {
         $user = $this->getOrSaveUser('vkontakte');
 
-
+        Auth::login($user);
 
         return redirect()->to(
             session('redirect_to') ? session('redirect_to') . 'auth?token=' . $user->createToken(

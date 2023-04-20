@@ -1,0 +1,147 @@
+@import "../../styles/colors";
+
+.root {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 25px;
+  margin-bottom: 25px;
+
+  &:hover {
+    .moreButton {
+      opacity: 1;
+    }
+  }
+
+  @media (min-width: 415px) {
+    width: 100%;
+  }
+
+  @media (max-width: 414px) {
+    width: 100%;
+  }
+
+  &:not(:last-of-type) {
+    border-bottom: 1px solid $grayLine;
+  }
+
+  iframe {
+    margin-bottom: 0;
+    height: 420px !important;
+    width: 100%;
+
+    @media (max-width: 414px) {
+      height: 300px !important;
+    }
+  }
+}
+
+.topInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 17px;
+
+  .topUserInfo {
+    display: flex;
+    align-items: center;
+    @media (max-width: 414px) {
+      align-items: start;
+      flex-direction: column;
+    }
+  }
+}
+
+.author {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  margin-right: 10px;
+
+  div[class*="Avatar_letterAvatar"] {
+    font-size: 12px;
+    line-height: 21px;
+    margin-right: 0;
+  }
+
+  img {
+    border-radius: 30px;
+    width: 20px;
+    height: 20px;
+  }
+
+  b {
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 8px;
+  }
+
+  &:hover {
+    color: $greenText;
+  }
+}
+
+.title {
+  font-size: 28px;
+  line-height: 32px;
+  cursor: pointer;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+.paragraph {
+  font-size: 16px;
+  line-height: 28px;
+  margin: 12px 0;
+  font-family: "Merriweather", system-ui;
+}
+
+.image {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.imageWrapper {
+  border-radius: 4px;
+  max-height: 600px;
+  overflow: hidden;
+  cursor: pointer;
+  margin-bottom: 17px;
+}
+
+.time {
+  color: $gray;
+  font-size: 13px;
+  @media (max-width: 414px) {
+    position: relative;
+    left: 28px;
+  }
+}
+
+.footerInfo {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+.statusLabel {
+  display: inline-block;
+  color: $orange;
+  border: 1px solid;
+  border-radius: 30px;
+  padding: 5px 11px;
+  font-size: 13px;
+}
+
+.moreButton {
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out;
+}

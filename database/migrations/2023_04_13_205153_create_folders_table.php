@@ -20,9 +20,9 @@ return new class extends Migration {
         });
 
         Schema::create('channel_user', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('channel_id')->constrained();
-            $table->foreignId('folder_id')->constrained();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('channel_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('folder_id')->constrained()->cascadeOnDelete();
             $table->primary(['user_id', 'channel_id', 'folder_id']);
         });
     }

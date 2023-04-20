@@ -1,51 +1,66 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {Head} from '@inertiajs/react';
-import FolderModal from "@/Components/Folder/FolderModal";
+import {Link, Head} from '@inertiajs/react';
+import {MiniPost} from "@/Components/MiniPost";
+import {Sidebar} from "@/Components/SideBar";
+import {useState} from "react";
+import {Header} from "@/Components/Header";
+import {AddCategoryButton} from "@/Components/AddCategoryButton";
+import {useGetFeedQuery} from "@/redux/api/feed";
+import {useSelector} from "react-redux";
+import {selectUser} from "@/redux/slices/user";
 
-export default function Dashboard({auth, feeds}) {
-    console.log(feeds);
+export default function Dashboard({auth, laravelVersion, phpVersion}) {
+    const user = useSelector(selectUser);
+    const feedApi = useGetFeedQuery();
+
     return (
-        <AuthenticatedLayout
-            user={auth.user}
-            header={
-                <div>
-                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
-                    <FolderModal/>
-                </div>
-            }
-        >
-            <Head title="Dashboard"/>
+        <>
+            <Head title="Welcome"/>
 
-            <div className="py-12">
-                <div className="max-w-2xl mx-auto sm:px-6 lg:px-8">
-                    <div className="overflow-hidden shadow-sm sm:rounded-lg">
-                        {
-                            feeds.map(item => {
-                                return (
-                                    <div key={item.id} className="flex items-start bg-white shadow-md rounded-md mt-1">
-                                        <div className="w-1/3">
-                                            <img className="object-cover w-full h-full rounded-l-md"
-                                                 src={item.image} alt="News Image"/>
-                                        </div>
-                                        <div className="w-2/3 p-4">
-                                            <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
-                                            <p className="text-sm text-gray-600 mb-4">{item.pub_date} - Категория</p>
-                                            <div className="text-gray-800"
-                                                 dangerouslySetInnerHTML={{__html: item.description}}>
+            <div>
+                <Header user={user}/>
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        }
+                <div className="wrapper">
+                    <div className="sideBar">
+                        {user && <Sidebar/>}
+                    </div>
+                    <div className="posts">
+                        <div className="posts-items">
 
+                            {feedApi?.data?.data?.map((obj) => (
+                                <MiniPost
+                                    key={obj.id}
+                                    id={obj.id}
+                                    slug={'test'}
+                                    title={obj.title}
+                                    user={{id: 1, name: obj.channel.name, avatar: `/storage/${obj.channel.icon}`}}
+                                    imageUrl={obj.image}
+                                    description={obj.description}
+                                    viewsCount={0}
+                                    commentsCount={0}
+                                    likesCount={0}
+                                    dislikesCount={0}
+                                    createdAt={obj.pub_date}
+                                    status={'active'}
+                                    likedType={null}
+                                    category={obj.category}
+                                    isOwner={false}
+                                    onRemovePost={undefined}
+                                />
+                            ))}
+                            {/*{data.length ? <LoadMore onClick={loadMorePosts} disabled={isLoading}/> : null}*/}
 
+                            {user?.id && !feedApi?.data?.data?.length ? <div style={{display: 'flex', alignItems: 'baseline'}}>
+                                У вас пока нет записей, попробуйте добавить категорию с каналами <AddCategoryButton/>
+                            </div> : null}
+
+                            {!user?.id ? <div>Авторизуйтесь</div> : null}
+
+                        </div>
+                    </div>
+                    <div className="sideComments">
                     </div>
                 </div>
-
-
             </div>
-        </AuthenticatedLayout>
+        </>
     );
 }
