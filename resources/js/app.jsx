@@ -85,7 +85,7 @@ const Component = function (props) {
                     >
                         <Alert severity={alertInfo.status}>{alertInfo.text}</Alert>
                     </Snackbar>
-                    <BottomNav user={{}}/>
+                    <BottomNav/>
                 </ThemeProvider>
             </MainContext.Provider>
         </>

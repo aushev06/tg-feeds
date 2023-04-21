@@ -8,6 +8,7 @@ use App\Http\Services\Feed\FeedService;
 use App\Http\Services\Feed\FeedServiceInterface;
 use App\Http\Services\Folder\FolderService;
 use App\Http\Services\Folder\FolderServiceInterface;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -37,6 +38,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        if(config('app.env') === 'production') {
+            URL::forceScheme('https');
+        }
     }
 }

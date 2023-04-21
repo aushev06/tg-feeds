@@ -13,7 +13,12 @@ export const AddCategoryButton = () => {
 
     const list = () => (
         <Box
-            sx={{width: 800}}
+            sx={{
+                width: 'auto',
+                '@media (max-width: 600px)': {
+                    width: '100%',
+                },
+            }}
             role="presentation"
         >
             <CategoryForm close={handleClose}/>
@@ -39,8 +44,8 @@ export const AddCategoryButton = () => {
     )
 }
 
-const CategoryForm = ({ close }) => {
-    const { openAlert } = useAlert()
+const CategoryForm = ({close}) => {
+    const {openAlert} = useAlert()
 
     const [name, setName] = useState('');
     const [image, setImage] = useState(null);
