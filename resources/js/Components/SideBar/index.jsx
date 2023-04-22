@@ -6,7 +6,6 @@ import {Categories} from "@/Components/Categories";
 import {useGetCategoriesQuery} from "@/redux/api/category";
 
 export const Sidebar = () => {
-
     const categoryQuery = useGetCategoriesQuery();
 
     return (
