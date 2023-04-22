@@ -6,6 +6,8 @@ import {useDispatch} from "react-redux";
 import {AuthModalContext} from "@/Components/AuthDialog";
 import {Button} from "@/Components/Button";
 import {setUser} from "@/redux/slices/user";
+import { router } from '@inertiajs/react';
+
 
 export const WelcomeForm = () => {
     const dispatch = useDispatch();
@@ -22,12 +24,11 @@ export const WelcomeForm = () => {
             if (win?.closed) {
                 clearInterval(popupTick);
                 try {
-                    closeModal();
-
                     window.axios.get('/api/user').then(r => {
                         console.log(r.data);
                         dispatch(setUser(r.data));
                     });
+                    closeModal();
 
 
                 } catch (err) {

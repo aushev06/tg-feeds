@@ -28,7 +28,9 @@ const Component = function (props) {
 
 
     useEffect(() => {
-        dispatch(setUser(props.children.props.initialPage.props.auth.user));
+        if (props.children.props.initialPage.props.auth.user) {
+            dispatch(setUser(props.children.props.initialPage.props.auth.user));
+        }
     })
 
 
