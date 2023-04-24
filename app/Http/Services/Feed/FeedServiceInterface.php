@@ -7,5 +7,5 @@ use Illuminate\Http\Request;
 
 interface FeedServiceInterface extends CRUDServiceInterface
 {
-    public function listByFolder(Request $request);
+    public function listByFolder(int $folderId);
 }

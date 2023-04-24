@@ -15,7 +15,7 @@ export const Sidebar = () => {
                     {
                         icon: <img src={'/assets/icons/hot.svg'} alt="Популярное"/>,
                         name: "Все",
-                        active: true,
+                        active: window.location.pathname === "/",
                         href: "/",
                     },
                     // {

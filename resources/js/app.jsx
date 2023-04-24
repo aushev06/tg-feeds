@@ -33,10 +33,6 @@ const Component = function (props) {
         }
     })
 
-
-    const categoryQuery = useGetCategoriesQuery();
-    const feedApi = useGetFeedQuery();
-
     const [alertInfo, setAlertInfo] = useState({
         text: '',
         status: 'info',

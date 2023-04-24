@@ -21,7 +21,7 @@ class FeedController extends Controller
      */
     public function index(Request $request)
     {
-        return new FeedResourceCollection($request->folderId ?  $this->service->listByFolder(request()) : $this->service->list(auth()->user()->id));
+        return new FeedResourceCollection($request->folderId ?  $this->service->listByFolder(+$request->folderId) : $this->service->list(auth()->user()->id));
     }
 
     /**

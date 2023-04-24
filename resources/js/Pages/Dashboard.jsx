@@ -7,6 +7,7 @@ import {AddCategoryButton} from "@/Components/AddCategoryButton";
 import {useGetFeedQuery} from "@/redux/api/feed";
 import {useSelector} from "react-redux";
 import {selectUser} from "@/redux/slices/user";
+import {LoadMore} from "@/Components/LoadMore";
 
 export default function Dashboard({auth, laravelVersion, phpVersion}) {
     const user = useSelector(selectUser);
@@ -47,7 +48,7 @@ export default function Dashboard({auth, laravelVersion, phpVersion}) {
                                     onRemovePost={undefined}
                                 />
                             ))}
-                            {/*{data.length ? <LoadMore onClick={loadMorePosts} disabled={isLoading}/> : null}*/}
+                            {feedApi?.data?.data?.length ? <LoadMore onClick={() => {}} disabled={false}/> : null}
 
                             {user?.id && !feedApi?.data?.data?.length ? <div style={{display: 'flex', alignItems: 'baseline'}}>
                                 У вас пока нет записей, попробуйте добавить категорию с каналами <AddCategoryButton/>

@@ -1,12 +1,13 @@
 import {Link, Head} from '@inertiajs/react';
 import {MiniPost} from "@/Components/MiniPost";
 import {Sidebar} from "@/Components/SideBar";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Header} from "@/Components/Header";
 import {AddCategoryButton} from "@/Components/AddCategoryButton";
 import {useGetFeedQuery} from "@/redux/api/feed";
 import {useSelector} from "react-redux";
 import {selectUser} from "@/redux/slices/user";
+import {LoadMore} from "@/Components/LoadMore";
 
 export default function Welcome({auth, laravelVersion, phpVersion}) {
     const user = useSelector(selectUser);
@@ -62,12 +63,24 @@ export default function Welcome({auth, laravelVersion, phpVersion}) {
 
 function Posts() {
     const user = useSelector(selectUser);
-    const feedApi = useGetFeedQuery();
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [allPosts, setAllPosts] = useState([]);
+    const { data: posts, isFetching, refetch } = useGetFeedQuery(currentPage);
+
+    useEffect(() => {
+        if (posts) {
+            console.log(posts);
+
+            setAllPosts((prevPosts) => [...prevPosts, ...posts?.data]);
+        }
+    }, [posts]);
+
     return (
         <div className="posts">
             <div className="posts-items">
 
-                {feedApi?.data?.data?.map((obj) => (
+                {allPosts.map((obj) => (
                     <MiniPost
                         key={obj.id}
                         id={obj.id}
@@ -88,9 +101,9 @@ function Posts() {
                         onRemovePost={undefined}
                     />
                 ))}
-                {/*{data.length ? <LoadMore onClick={loadMorePosts} disabled={isLoading}/> : null}*/}
+                {allPosts.length ? <LoadMore onClick={() => setCurrentPage(currentPage + 1)} disabled={false}/> : null}
 
-                {user && !feedApi?.data?.data?.length ?
+                {user && !allPosts.length ?
                     <div style={{display: 'flex', alignItems: 'baseline'}}>
                         У вас пока нет записей, попробуйте добавить категорию с
                         каналами <AddCategoryButton/>

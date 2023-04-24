@@ -16,23 +16,17 @@ class FeedService implements FeedServiceInterface
 {
 
 
-    public function listByFolder(Request $request)
+    public function listByFolder(int $folderId)
     {
         /**
          * @var FolderServiceInterface $folderService
          */
         $folderService = app(FolderServiceInterface::class);
 
-        if (!$request->folderId) {
-            throw ValidationException::withMessages([
-                'folderId' => 'Передайте folderId'
-            ]);
-        }
-
         /**
          * @var Folder $folder
          */
-        $folder = $folderService->show(intval($request->folderId));
+        $folder = $folderService->show(intval($folderId));
 
         if ($folder->user_id !== auth()->user()->id) {
             abort(403);

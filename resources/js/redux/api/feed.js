@@ -27,7 +27,7 @@ export const feedApi = createApi({
     baseQuery: axiosBaseQuery({baseUrl: `/api/feeds`}),
     endpoints: (builder) => ({
         getFeed: builder.query({
-            query: () => ({url: ''}),
+            query: (page) => ({url: '?page=' + page}),
         }),
     }),
 })
