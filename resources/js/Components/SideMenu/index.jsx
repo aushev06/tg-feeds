@@ -16,6 +16,10 @@ export const SideMenu = ({
 }) => {
   const [_limit, setLimit] = React.useState(limit);
 
+  const handleEdit = (category) => {
+
+  }
+
   return (
     <>
       <div className={styles.wrapper}>
@@ -38,6 +42,10 @@ export const SideMenu = ({
                     name={item.name}
                     icon={item.icon}
                     isActive={item.active}
+                    onEdit={e => {
+                        e.preventDefault();
+                        handleEdit(item);
+                    }}
                   />
                   {Number(item.count) > 0 && (
                     <Badge

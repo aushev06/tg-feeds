@@ -1,0 +1,29 @@
+@import "../../styles/colors";
+
+.root {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid $grayLine;
+  padding-bottom: 25px;
+  @media (min-width: 415px) {
+    width: 85%;
+  }
+  @media (max-width: 414px) {
+    width: 100%;
+  }
+}
+
+.icon {
+  width: 65px;
+  height: 65px;
+  background-size: cover;
+  background-position: center;
+  margin-right: 15px;
+  border-radius: 3px;
+}
+
+.name {
+  font-size: 34px;
+  font-weight: 800;
+  margin-bottom: 3px;
+}

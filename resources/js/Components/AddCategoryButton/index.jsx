@@ -5,7 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 import {axios} from "@/core/axios";
 import {useAlert} from "@/hooks/useAlert";
 
-export const AddCategoryButton = () => {
+export const AddCategoryButton = ({ category }) => {
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => setOpen(true);
