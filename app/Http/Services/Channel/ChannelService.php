@@ -30,7 +30,8 @@ class ChannelService implements ChannelServiceInterface
             $data['icon'] = str_replace('public/', '', $path);
         }
 
-        return Channel::query()->firstOrCreate(['url' => $data['url'], $data]);
+
+        return Channel::query()->firstOrCreate(['url' => $data['url']], $data);
     }
 
     public function update(Model $model, array $data)
