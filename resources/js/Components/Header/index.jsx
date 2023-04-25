@@ -46,9 +46,7 @@ export const Header = (props) => {
                     {!visibleSearch && (
                         <div className={user ? styles.headerLogo : styles.headerLogoAuth}>
                             <Link href="/">
-                                <a>
-                                    <img src={'/assets/logo.svg'} alt="Logo"/>
-                                </a>
+                               TgFeed
                             </Link>
                         </div>
                     )}
