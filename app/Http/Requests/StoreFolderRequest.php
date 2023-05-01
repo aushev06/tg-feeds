@@ -3,8 +3,10 @@
 namespace App\Http\Requests;
 
 use GuzzleHttp\Client;
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class StoreFolderRequest extends FormRequest
 {
@@ -19,7 +21,7 @@ class StoreFolderRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     * @return array<string, Rule|array|string>
      */
     public function rules(): array
     {
@@ -50,7 +52,7 @@ class StoreFolderRequest extends FormRequest
         $client = new Client();
 
 
-        foreach ($this->channels as $key => $channel) {
+        foreach ($this->channels ?? [] as $key => $channel) {
             try {
                 $explodeUrl = explode('/', $channel);
                 $url = 'https://rsshub.app/telegram/channel/' . last($explodeUrl);
@@ -63,7 +65,7 @@ class StoreFolderRequest extends FormRequest
                     'icon' => (string)$result->channel->image->url,
                     'url' => $url
                 ];
-            } catch (\Throwable $exception) {
+            } catch (Throwable $exception) {
                 $errorMessages['channels.' . $key] = __('Невалидная ссылка');
             }
         }

@@ -38,6 +38,17 @@ class FolderService implements FolderServiceInterface
     {
         $model->update($data);
 
+
+        /**
+         * @var ChannelServiceInterface $channelService
+         */
+        $channelService = app(ChannelServiceInterface::class);
+
+        foreach ($data['channels'] as $channel) {
+            $channel['folder_id'] = $model->id;
+            $channelService->createChannelAndAttachToUser($channel, auth()->user());
+        }
+
         return $model->refresh();
     }
 
