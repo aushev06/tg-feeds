@@ -84,7 +84,7 @@ class FolderService implements FolderServiceInterface
      */
     public function delete(Model $model)
     {
-        $model->channels()->delete();
+        $model->channels()->sync([]);
 
         return $model->delete();
     }
