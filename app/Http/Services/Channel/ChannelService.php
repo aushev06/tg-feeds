@@ -24,7 +24,7 @@ class ChannelService implements ChannelServiceInterface
 
     public function create(array $data)
     {
-        if (isset($data['icon'])) {
+        if (!empty($data['icon'])) {
             $path = 'public/icons/' . time() . '.jpg';
             $this->downloadIconFromTelegramAndSaveInStorage($data['icon'], $path);
             $data['icon'] = str_replace('public/', '', $path);

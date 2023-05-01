@@ -44,6 +44,7 @@ class FolderService implements FolderServiceInterface
     public function list(int $userId, bool $getAll = false)
     {
         return Folder::query()
+            ->with(['channels'])
             ->whereUserId($userId)
             ->paginate();
     }

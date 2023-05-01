@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreFolderRequest;
 use App\Http\Requests\UpdateFolderRequest;
+use App\Http\Resources\FolderResourceCollection;
 use App\Http\Services\Folder\FolderServiceInterface;
 use App\Models\Folder;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class FolderController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->service->list(auth()->user()->id, $request->boolean('getAll'));
+        return new FolderResourceCollection($this->service->list(auth()->user()->id, $request->boolean('getAll')));
     }
 
     /**
