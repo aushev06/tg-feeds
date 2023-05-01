@@ -5,6 +5,7 @@ namespace App\Http\Services\Folder;
 use App\Http\Services\Channel\ChannelServiceInterface;
 use App\Models\Folder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class FolderService implements FolderServiceInterface
 {
@@ -34,6 +35,11 @@ class FolderService implements FolderServiceInterface
         return $folder;
     }
 
+    /**
+     * @param Folder $model
+     * @param array $data
+     * @return Model
+     */
     public function update(Model $model, array $data)
     {
         $model->update($data);
@@ -44,10 +50,14 @@ class FolderService implements FolderServiceInterface
          */
         $channelService = app(ChannelServiceInterface::class);
 
+        $channelIds = [];
+
         foreach ($data['channels'] as $channel) {
             $channel['folder_id'] = $model->id;
-            $channelService->createChannelAndAttachToUser($channel, auth()->user());
+            $channelIds[] = $channelService->createChannelAndAttachToUser($channel, auth()->user())->id;
         }
+
+        $model->channels()->sync($channelIds);
 
         return $model->refresh();
     }
@@ -69,8 +79,13 @@ class FolderService implements FolderServiceInterface
         return Folder::query()->where(['id' => $id])->first();
     }
 
+    /**
+     * @param Folder $model
+     */
     public function delete(Model $model)
     {
+        $model->channels()->delete();
+
         return $model->delete();
     }
 }
