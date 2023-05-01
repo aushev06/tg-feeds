@@ -25,6 +25,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+Route::middleware('auth:sanctum')->delete('/user', function (Request $request) {
+    return User::query()->where('id', $request->user()->id)->delete();
+});
+
+
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('folders', FolderController::class);
     Route::apiResource('channels', ChannelController::class);
