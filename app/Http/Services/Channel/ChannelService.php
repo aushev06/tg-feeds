@@ -54,9 +54,15 @@ class ChannelService implements ChannelServiceInterface
 
         $channel = $this->create($saveData);
 
-        $user->channels()->attach($channel->id, [
-            'folder_id' => $data['folder_id'],
-        ]);
+        if (!$user->channels()
+            ->where('channel_id', $channel->id)
+            ->where('folder_id', $data['folder_id'])
+            ->exists()
+        ) {
+            $user->channels()->attach($channel->id, [
+                'folder_id' => $data['folder_id'],
+            ]);
+        }
 
 
         return $channel;
