@@ -32,11 +32,6 @@ class StoreFolderRequest extends FormRequest
             'user_id' => [
                 'required'
             ],
-            'channels' => [
-                'array',
-                'required'
-            ],
-
             'icon' => [
                 'file',
                 'nullable'
@@ -46,38 +41,9 @@ class StoreFolderRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        $errorMessages = [];
-        $channels = [];
-
-        $client = new Client();
-
-
-        foreach ($this->channels ?? [] as $key => $channel) {
-            try {
-                $explodeUrl = explode('/', $channel);
-                $url = 'https://rsshub.app/telegram/channel/' . last($explodeUrl);
-
-                $response = $client->get($url, ['timeout' => 1]);
-                $result = simplexml_load_string($response->getBody()->getContents());
-
-                $channels[] = [
-                    'name' => (string)$result->channel->title,
-                    'icon' => (string)$result->channel->image->url,
-                    'url' => $url
-                ];
-            } catch (Throwable $exception) {
-                $errorMessages['channels.' . $key] = __('Невалидная ссылка');
-            }
-        }
-
-        if (sizeof($errorMessages)) {
-            throw ValidationException::withMessages($errorMessages);
-        }
-
 
         $this->merge([
             'user_id' => $this->user()->id,
-            'channels' => $channels,
         ]);
     }
 }
