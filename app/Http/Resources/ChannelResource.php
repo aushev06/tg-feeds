@@ -22,7 +22,7 @@ class ChannelResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'url' => $this->url,
-            'icon' => $this->icon,
+            'icon' => $this->icon ? 'https://tg-feed.ru/storage/' . $this->icon : null,
             'tgUrl' => $tgUrl,
             'last_update' => $this->last_update,
             'created_at' => $this->created_at,
