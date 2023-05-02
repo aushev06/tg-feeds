@@ -31,22 +31,7 @@ class FolderService implements FolderServiceInterface
     public function update(Model $model, array $data)
     {
         $model->update($data);
-
-
-        /**
-         * @var ChannelServiceInterface $channelService
-         */
-        $channelService = app(ChannelServiceInterface::class);
-
-        $channelIds = [];
-
-        foreach ($data['channels'] as $channel) {
-            $channel['folder_id'] = $model->id;
-            $channelIds[] = $channelService->createChannelAndAttachToUser($channel, auth()->user())->id;
-        }
-
-        $model->channels()->sync($channelIds);
-
+        
         return $model->refresh();
     }
 
