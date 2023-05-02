@@ -20,19 +20,7 @@ class FolderService implements FolderServiceInterface
 
         $data['icon'] = $icon;
 
-        $folder = Folder::query()->create($data);
-
-        /**
-         * @var ChannelServiceInterface $channelService
-         */
-        $channelService = app(ChannelServiceInterface::class);
-
-        foreach ($data['channels'] as $channel) {
-            $channel['folder_id'] = $folder->id;
-            $channelService->createChannelAndAttachToUser($channel, auth()->user());
-        }
-
-        return $folder;
+        return Folder::query()->create($data);
     }
 
     /**
