@@ -9,4 +9,6 @@ use App\Models\User;
 interface ChannelServiceInterface extends CRUDServiceInterface
 {
     public function createChannelAndAttachToUser(array $data, User $user);
+
+    public function detachChannelFromFolder(int $channelId, int $folderId);
 }

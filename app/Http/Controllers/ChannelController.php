@@ -6,6 +6,7 @@ use App\Http\Requests\StoreChannelRequest;
 use App\Http\Requests\UpdateChannelRequest;
 use App\Http\Services\Channel\ChannelServiceInterface;
 use App\Models\Channel;
+use Illuminate\Http\Request;
 
 class ChannelController extends Controller
 {
@@ -56,8 +57,8 @@ class ChannelController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Channel $channel)
+    public function destroy(Channel $channel, Request $request)
     {
-        //
+        $this->service->detachChannelFromFolder($channel->id, $request->folderId);
     }
 }

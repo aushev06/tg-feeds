@@ -3,6 +3,7 @@
 namespace App\Http\Services\Channel;
 
 use App\Models\Channel;
+use App\Models\Folder;
 use App\Models\User;
 use Exception;
 use GuzzleHttp\Client;
@@ -71,5 +72,15 @@ class ChannelService implements ChannelServiceInterface
     private function downloadIconFromTelegramAndSaveInStorage(string $iconUrl, string $path)
     {
         Storage::disk()->put($path, file_get_contents($iconUrl));
+    }
+
+    public function detachChannelFromFolder(int $channelId, int $folderId)
+    {
+        /**
+         * @var Folder $folder
+         */
+        $folder = Folder::query()->whereId($folderId)->firstOrFail();
+
+        $folder->channels()->detach([$channelId]);
     }
 }
