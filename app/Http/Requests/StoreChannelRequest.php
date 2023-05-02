@@ -39,13 +39,19 @@ class StoreChannelRequest extends FormRequest
     protected function prepareForValidation()
     {
         try {
+            $explodeUrl = explode('/', $this->url);
+            $url = 'https://rsshub.app/telegram/channel/' . last($explodeUrl);
+
+
             $client = new Client();
 
-            $response = $client->get($this->url, ['timeout' => 1]);
+            $response = $client->get($explodeUrl, ['timeout' => 1]);
             $result = simplexml_load_string($response->getBody()->getContents());
 
             return $this->merge([
-                'name' => (string)$result->channel->title
+                'name' => (string)$result->channel->title,
+                'icon' => (string)$result->channel->image->url,
+                'url' => $url
             ]);
         } catch (\Throwable $exception) {
             throw ValidationException::withMessages(['url' => __('Невалидная ссылка')]);
