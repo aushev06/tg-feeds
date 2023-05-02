@@ -45,7 +45,7 @@ class StoreChannelRequest extends FormRequest
 
             $client = new Client();
 
-            $response = $client->get($explodeUrl, ['timeout' => 1]);
+            $response = $client->get($url, ['timeout' => 1]);
             $result = simplexml_load_string($response->getBody()->getContents());
 
             return $this->merge([
