@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreChannelRequest;
 use App\Http\Requests\UpdateChannelRequest;
+use App\Http\Resources\ChannelResource;
 use App\Http\Services\Channel\ChannelServiceInterface;
 use App\Models\Channel;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class ChannelController extends Controller
      */
     public function store(StoreChannelRequest $request)
     {
-        return $this->service->createChannelAndAttachToUser($request->validated(), auth()->user());
+        return new ChannelResource($this->service->createChannelAndAttachToUser($request->validated(), auth()->user()));
     }
 
     /**

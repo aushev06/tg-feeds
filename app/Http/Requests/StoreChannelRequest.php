@@ -32,6 +32,10 @@ class StoreChannelRequest extends FormRequest
             ],
             'folder_id' => [
                 'required'
+            ],
+
+            'icon' => [
+                'nullable'
             ]
         ];
     }
