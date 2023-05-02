@@ -22,6 +22,7 @@ class ChannelResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'url' => $this->url,
+            'icon' => $this->icon,
             'tgUrl' => $tgUrl,
             'last_update' => $this->last_update,
             'created_at' => $this->created_at,
