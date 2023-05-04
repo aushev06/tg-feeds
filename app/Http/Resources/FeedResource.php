@@ -22,7 +22,7 @@ class FeedResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'title' => $this->title,
+            'title' => strlen($this->title) > 100 ? mb_substr($this->title, 0, 100) . '...' : $this->title,
             'description' => $this->description,
             'image' => $this->image,
             'channel' => $this->channel,
