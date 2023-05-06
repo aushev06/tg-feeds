@@ -58,7 +58,7 @@ class StoreChannelRequest extends FormRequest
                 'url' => $url
             ]);
         } catch (\Throwable $exception) {
-            throw ValidationException::withMessages(['url' => __('Невалидная ссылка')]);
+            throw ValidationException::withMessages(['url' => __('Данный канал недоступен')]);
         }
     }
 }
