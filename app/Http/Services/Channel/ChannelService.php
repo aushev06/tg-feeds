@@ -8,6 +8,7 @@ use App\Models\User;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,16 +17,23 @@ class ChannelService implements ChannelServiceInterface
 
     public function list(int $userId, bool $getAll = false)
     {
-        return Channel::query()
+        $folderId = request()->get('folderId');
+
+        $query = Channel::query()
             ->join(
-                table: 'channel_user',
-                first: 'channel_user.channel_id',
-                operator: '=',
-                second: 'channels.id',
-                where: function ($builder) use ($userId) {
-                    return $builder->where('user_id', '=', $userId);
-                })
-            ->get();
+                'channel_user', function (JoinClause $joinClause) use ($userId, $folderId) {
+                $joinClause
+                    ->on('channel_user.channel_id', '=', 'channels.id')
+                    ->on('channel_user.user_id', '=', DB::raw($userId));
+
+                if ($folderId) {
+                    $joinClause->on('channel_user.folder_id', '=', DB::raw($folderId));
+                }
+
+            });
+
+
+        return $getAll ? $query->get() : $query->paginate();
     }
 
     public function show(int $id): Channel
