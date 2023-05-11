@@ -8,6 +8,7 @@ use App\Models\User;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ChannelService implements ChannelServiceInterface
@@ -15,7 +16,16 @@ class ChannelService implements ChannelServiceInterface
 
     public function list(int $userId, bool $getAll = false)
     {
-        // TODO: Implement list() method.
+        return Channel::query()
+            ->join(
+                table: 'channel_user',
+                first: 'channel_user.channel_id',
+                operator: '=',
+                second: 'channels.id',
+                where: function ($builder) use ($userId) {
+                    return $builder->where('user_id', '=', $userId);
+                })
+            ->get();
     }
 
     public function show(int $id): Channel

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreChannelRequest;
 use App\Http\Requests\UpdateChannelRequest;
 use App\Http\Resources\ChannelResource;
+use App\Http\Resources\ChannelResourceCollection;
 use App\Http\Services\Channel\ChannelServiceInterface;
 use App\Models\Channel;
 use Illuminate\Http\Request;
@@ -18,9 +19,9 @@ class ChannelController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return new ChannelResourceCollection($this->service->list($request->user()->id, $request->boolean('getAll')));
     }
 
     /**
