@@ -30,6 +30,7 @@ class FeedResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'pub_date' => $this->pub_date,
+            'link' => $this->link,
         ];
     }
 }
